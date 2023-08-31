@@ -12,7 +12,7 @@ const navigate = useNavigate();
 
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('')
-  
+
 const onNavigateToRegister = () => {
   // Code à exécuter lorsque le bouton est pressé.
   try {
@@ -32,23 +32,20 @@ const onLogin = async () => {
   try{
     if (!isEmailValid) {
       return console.log("null or undefined");
-    } 
-    
+    }
+
     if (isEmailValid) {
       const response = await axios
         .post('http://localhost:5000/auth/login', {
           email,
           password
-        })
-  
-        console.log(response)
-        setPosts(response.data.user);
-  
+        }, { withCredentials: true })
+
         navigate("/home")
-    } 
+    }
     navigate('/home');
-  
-  
+
+
     // alert("Veuillez entrer un mail ou un mot de passe correct");
   } catch(err) {
     console.error(err)
@@ -84,7 +81,7 @@ const onLogin = async () => {
           <View>
             <Version />
           </View>
-        
+
       </SafeAreaView>
     );
 }
@@ -130,7 +127,7 @@ const styles = StyleSheet.create({
       borderRadius: 10,
       width: 144,
       height: 55,
-      
+
     },
     textbutton: {
       color: '#f1f1f1',

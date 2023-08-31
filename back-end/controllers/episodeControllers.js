@@ -7,14 +7,14 @@ export class EpisodeControllers {
             const { episodeId } = req.params;
 
             const episode = await EpisodeModel.findOne({_id: episodeId })
-            
+
             if(!episode) {
                 return res.status(404).send({
                     message: `The episode (${episodeId}) is not found !`
                 })
             }
 
-            res.status(200).send({ episode })
+            return res.status(200).send({ episode })
         } catch(err) {
             console.log(err);
             res.status(500).send({ error: err.message })
@@ -27,7 +27,7 @@ export class EpisodeControllers {
 
             console.log(req.user)
 
-            res.status(200).send({ episodes })
+            return res.status(200).send({ episodes })
         } catch(err) {
             console.log(err);
             res.status(500).send({ error: err.message })
@@ -36,16 +36,17 @@ export class EpisodeControllers {
 
     static async create(req, res) {
         try {
-            const { name, description, time, serieId } = req.body;
+            const { name, description, logo, time, serieId } = req.body;
 
             const episodeCreated = await EpisodeModel.create({
                 name,
-                description, 
+                description,
                 time,
+                logo,
                 serieId: serieId || null,
             });
 
-            res.status(201).send({ episodeCreated })
+            return res.status(201).send({ episodeCreated })
         } catch (err) {
             console.log(err);
             res.status(500).send({ error: err.message })
@@ -55,7 +56,7 @@ export class EpisodeControllers {
     static async update(req, res) {
         try {
             const { episodeId } = req.params;
-            const { name, time, description, serieId } = req.body;
+            const { name, time, logo, description, serieId } = req.body;
 
             if(serieId){
                 const serie = await SerieModel.findOne({ _id: serieId });
@@ -73,18 +74,19 @@ export class EpisodeControllers {
                     ...( name ? { name } : {} ),
                     ...( time ? { time } : {} ),
                     ...( description ? { description } : {}),
+                    ...( logo ? { logo } : {}),
                     ...( (serieId || serieId === null) ? { serieId } : {})
                 },
                 { new: true }
             )
-            
+
             if (!episodeUpdated){
                 res.status(404).send({
                     message: `The episode (${episodeId}) is not found !`
                 })
             }
 
-            res.status(201).send({ episodeUpdated })
+            return res.status(201).send({ episodeUpdated })
         } catch (err) {
             console.log(err);
             res.status(500).send({ error: err.message })
@@ -96,14 +98,14 @@ export class EpisodeControllers {
             const { episodeId } = req.params;
 
             const episode = await EpisodeModel.findOneAndDelete({ _id: episodeId });
-    
+
             if(!episode){
                 return res.status(404).send({
                     message: `The episode (${episodeId}) is not found !`
                 })
             }
-    
-            res.status(200).send({
+
+            return res.status(200).send({
                 message: `Episode (${episodeId}) deleted`
             })
         } catch (err) {

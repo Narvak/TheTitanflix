@@ -5,6 +5,10 @@ const SerieSchema = new mongoose.Schema({
         type: String,
         required : true
     },
+    logo: {
+        type: String,
+        required: false,
+    },
     averageTime: {
         type: Number,
         required: true

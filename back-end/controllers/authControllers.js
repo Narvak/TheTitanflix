@@ -5,6 +5,8 @@ import { UserModel } from "../models/userModel"
 export class AuthControllers {
     static async login(req, res){
         try{
+            console.log(req.cookies)
+
             const { email, password } = req.body;
 
             const user = await UserModel.findOne({ email });
@@ -45,25 +47,25 @@ export class AuthControllers {
                 httpOnly: true
             })
 
-            res.status(200).send({ user });
+            return res.status(200).send({ user });
         } catch (err) {
             console.log(err);
             res.status(500).send({ error: err.message })
         }
     }
-    
+
     static async register(req, res){
         try{
             const { username, email, password, phone } = req.body;
 
             const salt = bcrypt.genSaltSync(10)
             const hashPassword = bcrypt.hashSync(password, salt)
-    
+
             const user = await UserModel.create({ username, email, password: hashPassword, phone });
 
             await AuthControllers.login(req, res);
-    
-            res.status(201).send({ 
+
+            res.status(201).send({
                 data: user,
                 message: "User created !"
             })

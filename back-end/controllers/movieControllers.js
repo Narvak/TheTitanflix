@@ -13,7 +13,7 @@ export class MovieControllers {
                 })
             }
 
-            res.status(200).send({ movie })
+            return res.status(200).send({ movie })
         } catch (err) {
             console.log(err);
             res.status(500).send({ error: err.message })
@@ -24,7 +24,7 @@ export class MovieControllers {
         try {
             const movies = await MovieModel.find({});
 
-            res.status(200).send({ movies })
+            return res.status(200).send({ movies })
         } catch (err) {
             console.log(err);
             res.status(500).send({ error: err.message })
@@ -33,27 +33,28 @@ export class MovieControllers {
 
     static async create(req, res) {
         try {
-            const { name, time } = req.body;
+            const { name, logo, time } = req.body;
 
-            const movieCreated = await MovieModel.create({ name, time });
+            const movieCreated = await MovieModel.create({ name, logo, time });
 
-            res.status(201).send({ movieCreated })
+            return res.status(201).send({ movieCreated })
         } catch (err) {
             console.log(err);
             res.status(500).send({ error: err.message })
         }
-    } 
+    }
 
     static async update(req, res) {
         try {
             const { movieId } = req.params;
-            const { name, time } = req.body;
+            const { name, logo, time } = req.body;
 
             const movieUpdated = await MovieModel.findOneAndUpdate(
                 { _id: movieId },
                 {
                     ...(name ? { name } : {}),
-                    ...(time ? { time }: {})
+                    ...(time ? { time }: {}),
+                    ...(logo ? { logo }: {}),
                 },
                 { new: true }
             )
@@ -64,7 +65,7 @@ export class MovieControllers {
                 })
             }
 
-            res.status(201).send({ movieUpdated })
+            return res.status(201).send({ movieUpdated })
         } catch (err) {
             console.log(err);
             res.status(500).send({ error: err.message })
@@ -83,7 +84,7 @@ export class MovieControllers {
                 })
             }
 
-            res.status(200).send({
+            return res.status(200).send({
                 message: `Movie (${movieId}) deleted`
             })
         } catch (err) {

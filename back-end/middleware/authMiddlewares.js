@@ -8,15 +8,15 @@ export class AuthMiddlewares {
             if(!token) {
                 return res.status(401).send({ message: "No token" });
             }
-    
+
             const jwtSecret = process.env.JWT_SECRET;
-    
+
             if(!jwtSecret) {
                 return res.status(500).send({ message: "jwt secret is not defined" });
             }
 
             req.user = jwt.verify(token, jwtSecret)
-    
+
             next();
         } catch (err) {
             console.log(err);
