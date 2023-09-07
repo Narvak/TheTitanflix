@@ -1,23 +1,38 @@
 import React, {useEffect, useState} from "react";
 import {
     StyleSheet,
-    Button,
     View,
     SafeAreaView,
     Text,
     Image,
     TouchableOpacity,
     FlatList,
-    ScrollView,
 } from "react-native";
 import {useNavigate} from "react-router-native";
 import Header from "../../UI/header/header";
 import Footer from "../../UI/footer/footer";
 import Version from "../../UI/version/version";
 import axios from "axios";
+import {useMoviesContext} from "../../context/moviesContext";
 
-export default function Films(props) {
+export const renderMovieItem = ({item, onDetailsNavigate, width}) => {
+    return (
+        <View style={{...styles.movieWrapper, width: width && width }} key={`movie : ${item?._id}`}>
+            <TouchableOpacity onPress={() => onDetailsNavigate(item)}>
+                <View style={styles.movieWrapper}>
+                    <Text style={styles.texteSecond}>{item?.name}</Text>
+                    <Image style={styles.images} source={{
+                        uri: item?.logo,
+                    }}/>
+                </View>
+            </TouchableOpacity>
+        </View>
+    );
+}
+
+export default function Films() {
     const navigate = useNavigate();
+    const {onChangeCurrentMovie} = useMoviesContext();
     const [movies, setMovies] = useState([]);
 
     useEffect(() => {
@@ -34,7 +49,7 @@ export default function Films(props) {
         })();
     }, []);
 
-    const back = () => {
+    const onHomeNavigate = () => {
         try {
             navigate("/home");
         } catch (error) {
@@ -42,24 +57,14 @@ export default function Films(props) {
         }
     };
 
-    const details = (movie) => {
+    const onDetailsNavigate = (movie) => {
         try {
-            navigate("/details");
+            onChangeCurrentMovie(movie);
+            navigate("/movie-details");
         } catch (error) {
             console.log(error);
         }
     };
-
-    const renderItem = ({item: movie}) => (
-        <TouchableOpacity onPress={() => details(movie)}>
-            <View style={styles.movieWrapper}>
-                <Text style={styles.texteSecond}>{movie?.name}</Text>
-                <Image style={styles.images} source={{
-                    uri: movie?.logo,
-                }}/>
-            </View>
-        </TouchableOpacity>
-    );
 
     return (
         <SafeAreaView style={styles.container}>
@@ -69,11 +74,11 @@ export default function Films(props) {
 
             <FlatList
                 data={movies}
-                renderItem={renderItem}
-                keyExtractor={(movie) => movie.id}
+                renderItem={({item}) => renderMovieItem({item, onDetailsNavigate})}
+                keyExtractor={({item}) => item?._id}
             />
 
-            <TouchableOpacity onPress={back}>
+            <TouchableOpacity onPress={onHomeNavigate}>
                 <Text>Back</Text>
             </TouchableOpacity>
 
@@ -93,7 +98,7 @@ const styles = StyleSheet.create({
         color: "#f1f1f1",
         textAlign: "center",
         marginHorizontal: "auto",
-        fontSize: 21,
+        fontSize: 16,
         marginVertical: 10,
     },
     images: {

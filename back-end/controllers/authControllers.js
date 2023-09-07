@@ -1,17 +1,17 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken"
-import { UserModel } from "../models/userModel"
+import {UserModel} from "../models/userModel"
 
 export class AuthControllers {
-    static async login(req, res){
-        try{
+    static async login(req, res) {
+        try {
             console.log(req.cookies)
 
-            const { email, password } = req.body;
+            const {email, password} = req.body;
 
-            const user = await UserModel.findOne({ email });
+            const user = await UserModel.findOne({email});
 
-            if(!user){
+            if (!user) {
                 return res.status(404).send({
                     message: `User (${email}) is not found !`
                 })
@@ -19,7 +19,7 @@ export class AuthControllers {
 
             const isCorrectPassword = bcrypt.compareSync(password, user.password);
 
-            if(!isCorrectPassword){
+            if (!isCorrectPassword) {
                 return res.status(201).send({
                     message: "Email or password are incorrect !"
                 })
@@ -27,41 +27,40 @@ export class AuthControllers {
 
             const jwtSecret = process.env.JWT_SECRET;
 
-            if(!jwtSecret) {
-                return res.status(500).send({ message: "jwt secret is not defined" });
+            if (!jwtSecret) {
+                return res.status(500).send({message: "jwt secret is not defined"});
             }
 
             const maxAge = 60 * 60 * 24 * 1000;
 
             const token = jwt.sign(
                 {
-                userId: user._id,
-                email: user.email
+                    userId: user._id,
+                    email: user.email
                 },
                 jwtSecret,
-                { expiresIn: maxAge}
+                {expiresIn: maxAge}
             )
 
             res.cookie("token", token, {
                 maxAge,
-                httpOnly: true
             })
 
-            return res.status(200).send({ user });
+            return res.status(200).send({user});
         } catch (err) {
             console.log(err);
-            res.status(500).send({ error: err.message })
+            res.status(500).send({error: err.message})
         }
     }
 
-    static async register(req, res){
-        try{
-            const { username, email, password, phone } = req.body;
+    static async register(req, res) {
+        try {
+            const {username, email, password, phone} = req.body;
 
             const salt = bcrypt.genSaltSync(10)
             const hashPassword = bcrypt.hashSync(password, salt)
 
-            const user = await UserModel.create({ username, email, password: hashPassword, phone });
+            const user = await UserModel.create({username, email, password: hashPassword, phone});
 
             await AuthControllers.login(req, res);
 
@@ -71,7 +70,7 @@ export class AuthControllers {
             })
         } catch (err) {
             console.log(err);
-            res.status(500).send({ error: err.message })
+            res.status(500).send({error: err.message})
         }
     }
 }

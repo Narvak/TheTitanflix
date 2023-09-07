@@ -1,46 +1,46 @@
-import { SerieModel } from "../models/serieModel";
-import { EpisodeModel } from "../models/episodeModel";
+import {SerieModel} from "../models/serieModel";
+import {EpisodeModel} from "../models/episodeModel";
 
 
 export class SerieControllers {
     static async findOne(req, res) {
-        try{
-            const { serieId } = req.params;
+        try {
+            const {serieId} = req.params;
 
-            const serie = await SerieModel.findOne({_id: serieId })
+            const serie = await SerieModel.findOne({_id: serieId})
 
-            if(!serie) {
+            if (!serie) {
                 return res.status(404).send({
                     message: `Serie (${serieId}) is not found !`
                 })
             }
 
-            return res.status(200).send({ serie })
-        } catch(err) {
+            return res.status(200).send({serie})
+        } catch (err) {
             console.log(err);
-            res.status(500).send({ error: err.message })
+            res.status(500).send({error: err.message})
         }
     }
 
 
     static async findOneWithEpisode(req, res) {
-        try{
-            const { serieId } = req.params;
+        try {
+            const {serieId} = req.params;
 
-            const serie = await SerieModel.findOne({_id: serieId })
+            const serie = await SerieModel.findOne({_id: serieId})
 
-            if(!serie) {
+            if (!serie) {
                 return res.status(404).send({
                     message: `Serie (${serieId}) is not found !`
                 })
             }
 
-            const episodes = await EpisodeModel.find({ serieId })
+            const episodes = await EpisodeModel.find({serieId})
 
-            return res.status(200).send({ serie, episodes })
-        } catch(err) {
+            return res.status(200).send({serie, episodes})
+        } catch (err) {
             console.log(err);
-            res.status(500).send({ error: err.message })
+            res.status(500).send({error: err.message})
         }
     }
 
@@ -49,18 +49,18 @@ export class SerieControllers {
             const series = await SerieModel.find({});
 
             return res.status(200).send({
-                data: series,
+                series,
                 message: "All series !"
             })
         } catch (err) {
             console.log(err);
-            res.status(500).send({ error: err.message })
+            res.status(500).send({error: err.message})
         }
     }
 
-    static async create(req, res){
+    static async create(req, res) {
         try {
-            const { name, logo, averageTime } = req.body;
+            const {name, logo, averageTime} = req.body;
 
             const serieCreated = await SerieModel.create({
                 name,
@@ -68,48 +68,48 @@ export class SerieControllers {
                 averageTime,
             });
 
-            return  res.status(201).send({ serieCreated })
+            return res.status(201).send({serieCreated})
         } catch (err) {
             console.log(err);
-            res.status(500).send({ error: err.message })
+            res.status(500).send({error: err.message})
         }
     }
 
     static async update(req, res) {
         try {
-            const { serieId } = req.params;
-            const { name, logo, averageTime } = req.body;
+            const {serieId} = req.params;
+            const {name, logo, averageTime} = req.body;
 
             const serieUpdated = await SerieModel.findOneAndUpdate(
-                { _id: serieId },
+                {_id: serieId},
                 {
-                    ...( name ? { name } : {} ),
-                    ...( averageTime ? { averageTime } : {} ),
-                    ...( logo ? { logo } : {} ),
+                    ...(name ? {name} : {}),
+                    ...(averageTime ? {averageTime} : {}),
+                    ...(logo ? {logo} : {}),
                 },
-                { new: true }
+                {new: true}
             )
 
-            if (!serieUpdated){
+            if (!serieUpdated) {
                 res.status(404).send({
                     message: `Serie (${serieId}) is not found !`
                 })
             }
 
-            return res.status(200).send({ serieUpdated, episodes })
+            return res.status(200).send({serieUpdated, episodes})
         } catch (err) {
             console.log(err);
-            res.status(500).send({ error: err.message })
+            res.status(500).send({error: err.message})
         }
     }
 
     static async delete(req, res) {
         try {
-            const { serieId } = req.params;
+            const {serieId} = req.params;
 
-            const serie = await SerieModel.findOneAndDelete({ _id: serieId });
+            const serie = await SerieModel.findOneAndDelete({_id: serieId});
 
-            if(!serie){
+            if (!serie) {
                 return res.status(404).send({
                     message: `Serie (${serieId}) is not found !`
                 })
@@ -120,7 +120,7 @@ export class SerieControllers {
             })
         } catch (err) {
             console.log(err);
-            res.status(500).send({ error: err.message })
+            res.status(500).send({error: err.message})
         }
     }
 }
