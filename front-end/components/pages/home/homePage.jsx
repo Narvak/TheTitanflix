@@ -82,39 +82,36 @@ export default function Home(props) {
                 <View style={styles.carousel}>
                     <Text style={styles.texteFirst}>VOS ANIMES GRATUITEMENT ET SANS PUB.</Text>
                     <View>
-                        <Text style={styles.texteSecond}>Un site fait par un passionné, pour des passionnés.</Text>
+                        <Text style={styles.texteSecond}>Une application fait par un passionné, pour des passionnés.</Text>
                         <Text style={styles.texteSecond}>100% gratuit, open source et sans pub.</Text>
-                        <Text style={styles.texteThird}>Parce que tout le monde n'a pas des centaines d'euros à mettre
-                            dans l'intégrale de son animé préféré...</Text>
-                        <Text style={styles.texteThird}>Mais n'oubliez pas de soutenir les créateurs en achetant les
-                            originaux lorsque vous le pouvez!</Text>
                     </View>
                 </View>
 
-                <FlatList
-                    data={movies}
-                    renderItem={({item}) =>
-                        renderMovieItem({
-                            item,
-                            onDetailsNavigate: onMovieDetailsNavigate,
-                            width: '50%',
-                        })}
-                    keyExtractor={(movie) => movie.id}
-                    numColumns={2}
-                />
+                <Text style={styles.texteSecond}>Movies</Text>
+                    <FlatList
+                        data={movies}
+                        renderItem={({item}) =>
+                            renderMovieItem({
+                                item,
+                                onDetailsNavigate: onMovieDetailsNavigate,
+                                width: '50%',
+                            })}
+                        keyExtractor={(movie) => movie.id}
+                        numColumns={2}
+                    />
 
-                <FlatList
-                    data={series}
-                    renderItem={({item}) =>
-                        renderSeriesItem({
-                            item,
-                            onDetailsNavigate: onSeriesDetailsNavigate,
-                            width: '50%',
-                        })}
-                    keyExtractor={(movie) => movie.id}
-                    numColumns={2}
-                />
-
+                <Text style={styles.texteSecond}>Series</Text>
+                    <FlatList
+                        data={series}
+                        renderItem={({item}) =>
+                            renderSeriesItem({
+                                item,
+                                onDetailsNavigate: onSeriesDetailsNavigate,
+                                width: '50%',
+                            })}
+                        keyExtractor={(serie) => serie.id}
+                        numColumns={2}
+                    />
 
                 <View>
                     <Version/>

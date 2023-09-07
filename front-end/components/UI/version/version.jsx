@@ -21,7 +21,7 @@ export default function Version (props) {
             <View>
                 <TouchableOpacity onPress={MainPage}>
                     <Text style={styles.texteVersion}>
-                        &copy; Titanflix 2023. V0.9.0
+                        &copy; Titanflix 2023. V1.0.0
                     </Text>
                 </TouchableOpacity>
             </View>

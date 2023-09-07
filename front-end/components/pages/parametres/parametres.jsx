@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-native';
 import Header from "../../UI/header/header";
 import Footer from "../../UI/footer/footer";
 import Version from "../../UI/version/version";
+import axios from "axios";
 
 
 export default function Parametres (props) {
@@ -25,6 +26,11 @@ export default function Parametres (props) {
   };
 
 
+  const InfoPerso = () => {
+    axios
+      .get()
+  }
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -43,21 +49,10 @@ export default function Parametres (props) {
             Informations personelles :
           </Text>
           <View style={styles.zone}>
-            <Text style={styles.textezone}>Nom : </Text>
-            <Text style={styles.textezone}>Email : </Text>
-            <Text style={styles.textezone}>Téléphone : </Text>
-            <Text style={styles.textezone}>Mot de passe : </Text>
-          </View>
-        </View>
-
-        <View style={styles.viewProfile}>
-          <Text style={styles.textezone}>
-            Informations personelles :
-          </Text>
-          <View style={styles.zone}>
-            <Text style={styles.textezone}>Conditions d'utilisation</Text>
-            <Text style={styles.textezone}>Confidancialité</Text>
-            <Text style={styles.textezone}>Préférence de cookies</Text>
+            <Text style={styles.textezone}>Name : {name}</Text>
+            <Text style={styles.textezone}>Mail : {mail}</Text>
+            <Text style={styles.textezone}>Phone : {phone}</Text>
+            <Text style={styles.textezone}>Password : {password}</Text>
           </View>
         </View>
 

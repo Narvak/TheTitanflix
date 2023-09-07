@@ -26,13 +26,21 @@ export default function Header (props) {
         console.log(error);
       }
     };
+    const home = () => {
+      // Code à exécuter lorsque le bouton est pressé.
+      try {
+        navigate('/home');
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
     return (
         <SafeAreaView>
             <View style={styles.header}>
                 <View style={styles.viewButtonHeader}>
-                    <TouchableOpacity>
-                      <Image style={styles.images} source={require('../../media/footer/ico-home.png')} />
+                    <TouchableOpacity onPress={home}>
+                      <Image style={styles.images} source={require('../../media/header/ico-logo.png')} />
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.buttonHeader} onPress={films}>
@@ -46,7 +54,6 @@ export default function Header (props) {
                             Séries
                         </Text>
                     </TouchableOpacity>
-
                 </View>
             </View>
         </SafeAreaView>

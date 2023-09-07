@@ -47,8 +47,6 @@ export default function Login() {
             }
             navigate('/home');
 
-
-            // alert("Veuillez entrer un mail ou un mot de passe correct");
         } catch (err) {
             console.error(err)
         }
