@@ -5,8 +5,6 @@ import {UserModel} from "../models/userModel"
 export class AuthControllers {
     static async login(req, res) {
         try {
-            console.log(req.cookies)
-
             const {email, password} = req.body;
 
             const user = await UserModel.findOne({email});
@@ -36,7 +34,9 @@ export class AuthControllers {
             const token = jwt.sign(
                 {
                     userId: user._id,
-                    email: user.email
+                    username: user.username,
+                    email: user.email,
+                    phone: user.phone,
                 },
                 jwtSecret,
                 {expiresIn: maxAge}

@@ -5,11 +5,11 @@ import { useNavigate } from 'react-router-native';
 
 export default function Version (props) {
     const navigate = useNavigate();
-  
+
     const MainPage = () => {
       // Code à exécuter lorsque le bouton est pressé.
       try {
-        navigate('/home');
+        navigate('/');
         //console.log(props, '/home',);
       } catch (error) {
         console.log(error);

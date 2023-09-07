@@ -6,10 +6,11 @@ import { useNavigate } from 'react-router-native';
 import Header from "../../UI/header/header";
 import Footer from "../../UI/footer/footer";
 import Version from "../../UI/version/version";
-import axios from "axios";
+import {useUserContext} from "../../context/userContext";
 
 
-export default function Parametres (props) {
+export default function Parametres () {
+  const { user } = useUserContext()
 
   const delAcompt = "Votre compte est supprimer";
   const delAcomptConsoleLog = "compte supprimer";
@@ -25,11 +26,6 @@ export default function Parametres (props) {
     };
   };
 
-
-  const InfoPerso = () => {
-    axios
-      .get()
-  }
 
 
   return (
@@ -49,10 +45,9 @@ export default function Parametres (props) {
             Informations personelles :
           </Text>
           <View style={styles.zone}>
-            <Text style={styles.textezone}>Name : {name}</Text>
-            <Text style={styles.textezone}>Mail : {mail}</Text>
-            <Text style={styles.textezone}>Phone : {phone}</Text>
-            <Text style={styles.textezone}>Password : {password}</Text>
+            <Text style={styles.textezone}>Nom : {user?.username}</Text>
+            <Text style={styles.textezone}>Email : {user?.email}</Text>
+            <Text style={styles.textezone}>Téléphone : {user?.phone}</Text>
           </View>
         </View>
 
@@ -78,17 +73,6 @@ export default function Parametres (props) {
   );
 }
 
-/*
-  <View styles={styles.zone}>
-    <Text style={styles.textezone}>Name : ${Name}</Text>
-    <Text style={styles.textezone}>Email : ${Email}</Text>
-    <Text style={styles.textezone}>Phone : ${Phone}</Text>
-    <Text style={styles.textezone}>Password : ${Password}</Text>
-  </View>*/
-
-
-
-
 //Le style de la page.
 const styles = StyleSheet.create({
   container: {
@@ -99,7 +83,6 @@ const styles = StyleSheet.create({
   },
   texteFirst: {
     color: '#f1f1f1',
-    textAlign: 'justify',
     fontSize: 34,
     fontWeight: 'bold',
     marginVertical: 34,

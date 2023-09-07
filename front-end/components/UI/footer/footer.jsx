@@ -12,7 +12,7 @@ export default function Footer (props) {
     const home = () => {
       // Code à exécuter lorsque le bouton est pressé.
       try {
-        navigate('/home');
+        navigate('/');
       } catch (error) {
         console.log(error);
       }
@@ -45,7 +45,7 @@ export default function Footer (props) {
                     <TouchableOpacity style={[styles.buttonFooter, styles.profile]} onPress={profile}>
                         <Image style={styles.images} source={require('../../media/footer/ico-profile.png')} />
                     </TouchableOpacity>
-              
+
                     <TouchableOpacity style={[styles.buttonFooter, styles.autre]} onPress={parametres}>
                         <Image style={styles.images} source={require('../../media/footer/ico-parametres.png')} />
                     </TouchableOpacity>

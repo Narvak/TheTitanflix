@@ -7,10 +7,11 @@ import Version from "../../UI/version/version";
 import {useNavigate} from 'react-router-native';
 import axios from "axios";
 import {useSeriesContext} from "../../context/seriesContext";
+import {useUserContext} from "../../context/userContext";
 
 export default function Login() {
     const navigate = useNavigate();
-    const {onReloadSeries} = useSeriesContext();
+    const { onGetUser } = useUserContext();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
@@ -43,9 +44,11 @@ export default function Login() {
                         password
                     }, {withCredentials: true})
 
-                navigate("/home")
+                await onGetUser();
+
+                navigate("/")
             }
-            navigate('/home');
+            navigate('/');
 
         } catch (err) {
             console.error(err)

@@ -51,7 +51,7 @@ export default function Films() {
 
     const onHomeNavigate = () => {
         try {
-            navigate("/home");
+            navigate("/");
         } catch (error) {
             console.log(error);
         }

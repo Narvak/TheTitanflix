@@ -7,9 +7,12 @@ import axios from "axios";
 import Home from "../home/homePage";
 
 import {useNavigate} from 'react-router-native';
+import {useUserContext} from "../../context/userContext";
 
 export default function Register(props) {
     const navigate = useNavigate();
+    const { onGetUser } = useUserContext();
+
     const [formField, setFormField] = useState({
         username: '',
         email: '',
@@ -41,7 +44,7 @@ export default function Register(props) {
                 return alert("Veuillez entrer un mot de passe identique")
             }
 
-            const response = await axios
+            await axios
                 .post('http://localhost:5000/auth/register', {
                     username: formField.username,
                     email: formField.email,
@@ -50,7 +53,10 @@ export default function Register(props) {
                     passwordConfirm: formField.passwordConfirm,
                 }, {withCredentials: true})
 
-            navigate("/home")
+            await onGetUser();
+
+
+            navigate("/")
         } catch (err) {
             console.error(err)
         }

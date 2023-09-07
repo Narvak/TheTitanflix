@@ -53,7 +53,7 @@ export default function Series() {
 
     const onHomeNavigate = () => {
         try {
-            navigate("/home");
+            navigate("/");
         } catch (error) {
             console.log(error);
         }
