@@ -95,11 +95,6 @@ export default function MovieDetails() {
                 </View>
             </View>
 
-            <View>
-                <Video ref={video} style={styles.video} source={{uri: 'https://www.youtube.com/watch?v=yvmcyIPVE3Y',}}
-                       useNativeControls resizeMode={ResizeMode.CONTAIN} isLooping
-                       onPlaybackStatusUpdate={status => setStatus(() => status)}/>
-            </View>
         </SafeAreaView>
     ) : <View style={[styles.loadingContainer, styles.horizontal]}>
         <ActivityIndicator/>
@@ -164,7 +159,6 @@ const styles = StyleSheet.create({
         marginRight: 21,
         width: '72%',
     },
-
     buttonclose: {
         backgroundColor: '#f1f1ff',
         color: '#123456',
@@ -177,7 +171,6 @@ const styles = StyleSheet.create({
     textbutton: {
         color: '#123456',
     },
-
     textActor: {
         color: '#f1f1f1',
         fontSize: 13,
@@ -194,7 +187,6 @@ const styles = StyleSheet.create({
         color: '#f1f1f1',
         fontSize: 21,
     },
-
     info: {
         width: '89%',
         height: 'auto',

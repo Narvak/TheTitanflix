@@ -78,10 +78,6 @@ export default function Films() {
                 keyExtractor={({item}) => item?._id}
             />
 
-            <TouchableOpacity onPress={onHomeNavigate}>
-                <Text>Back</Text>
-            </TouchableOpacity>
-
             <Version/>
 
             <Footer/>

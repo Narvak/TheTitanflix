@@ -12,8 +12,8 @@ import {useUserContext} from "../../context/userContext";
 export default function Parametres () {
   const { user } = useUserContext()
 
-  const delAcompt = "Votre compte est supprimer";
-  const delAcomptConsoleLog = "compte supprimer";
+  const delAcompt = "Votre compte est supprimé.";
+  const delAcomptConsoleLog = "compte supprimé.";
 
   const navigate = useNavigate();
   const supCompte = () => {
@@ -37,12 +37,12 @@ export default function Parametres () {
 
       <ScrollView>
         <View>
-          <Text style={styles.texteFirst}>Parametres</Text>
+          <Text style={styles.texteFirst}>Paramètres</Text>
         </View>
 
         <View style={styles.viewProfile}>
           <Text style={styles.textezone}>
-            Informations personelles :
+            Informations personnelles :
           </Text>
           <View style={styles.zone}>
             <Text style={styles.textezone}>Nom : {user?.username}</Text>
@@ -54,7 +54,7 @@ export default function Parametres () {
         <View>
           <TouchableOpacity onPress={supCompte} style={styles.supcompte}>
             <Text style={styles.textsupcompte}>
-              Suprimer le compte.
+              Supprimer le compte.
             </Text>
           </TouchableOpacity>
         </View>

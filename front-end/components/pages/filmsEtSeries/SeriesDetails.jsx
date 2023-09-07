@@ -177,7 +177,6 @@ const styles = StyleSheet.create({
     textbutton: {
         color: '#123456',
     },
-
     textActor: {
         color: '#f1f1f1',
         fontSize: 13,
@@ -194,7 +193,6 @@ const styles = StyleSheet.create({
         color: '#f1f1f1',
         fontSize: 21,
     },
-
     info: {
         width: '89%',
         height: 'auto',

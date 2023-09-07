@@ -72,17 +72,13 @@ export default function Series() {
         <SafeAreaView style={styles.container}>
             <Header/>
 
-            <Text style={styles.texteSecond}>Series</Text>
+            <Text style={styles.texteSecond}>Séries</Text>
 
             <FlatList
                 data={series}
                 renderItem={({item}) => renderSeriesItem({item, onDetailsNavigate})}
                 keyExtractor={({item}) => item?._id}
             />
-
-            <TouchableOpacity onPress={onHomeNavigate}>
-                <Text>Back</Text>
-            </TouchableOpacity>
 
             <Version/>
 

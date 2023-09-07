@@ -17,17 +17,16 @@ export default function Index(props) {
   };
 
       return (
-
         <SafeAreaView style={styles.container}>
             <View style={styles.viewcenter}>
               <View>
                 <Text style={styles.texteFirst}>Bienvenue sur</Text>
                 <Text style={styles.titanflix}>Titanflix</Text>
-                  <Text style={styles.texteSecond}>L'application d'animés les plus titanesque du moment.</Text>
+                  <Text style={styles.texteSecond}>L'application d'animes les plus titanesques du moment.</Text>
               </View>
 
               <View style={styles.viewcenter}>
-                <Text style={styles.texteSecond}>100% gratuit, open source et sans pub.</Text>
+                <Text style={styles.texteSecond}>100% gratuite, open source et sans pub.</Text>
               </View>
 
               <View>

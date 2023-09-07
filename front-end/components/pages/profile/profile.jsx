@@ -1,62 +1,120 @@
-import React from "react";
-import { StyleSheet, Button, View, SafeAreaView, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
-//import { ScrollView } from "react-native-gesture-handler";
+import React, {useEffect, useState} from "react";
+import {
+    StyleSheet,
+    Button,
+    View,
+    SafeAreaView,
+    Text,
+    Image,
+    ScrollView,
+    TouchableOpacity,
+    FlatList
+} from 'react-native';
+
+//import Swipeout from 'react-native-swipeout';
+//import { SwipeListView } from 'react-native-swipe-list-view';
+import {useNavigate} from 'react-router-native';
 import Header from "../../UI/header/header";
 import Footer from "../../UI/footer/footer";
 import Version from "../../UI/version/version";
-//import { TouchableOpacity } from "react-native-web";
+import Films, {renderMovieItem, RenderMovieItem} from "../filmsEtSeries/films";
+import Series, {renderSeriesItem, RenderSeriesItem} from "../filmsEtSeries/series";
+import axios from "axios";
+import {useSeriesContext} from "../../context/seriesContext";
+import {useMoviesContext} from "../../context/moviesContext";
 
-import { useNavigate } from 'react-router-native';
+export default function Profile (props) {
+    const navigate = useNavigate();
+    const {onChangeCurrentSeries} = useSeriesContext();
+    const {onChangeCurrentMovie} = useMoviesContext();
+    const [series, setSeries] = useState([]);
+    const [movies, setMovies] = useState([]);
 
 
+    useEffect(() => {
+        (async () => {
+            try {
+                const seriesResponse = await axios.get(
+                    "http://localhost:5000/series",
+                    {withCredentials: true}
+                );
 
-export default function Profile(props) {
+                setSeries(seriesResponse.data.series);
+
+                const moviesResponse = await axios.get(
+                    "http://localhost:5000/movies",
+                    {withCredentials: true}
+                );
+                setMovies(moviesResponse.data.movies);
+            } catch (error) {
+                console.log(error);
+            }
+        })();
+    }, []);
+
+    const onMovieDetailsNavigate = (movie) => {
+        try {
+            onChangeCurrentMovie(movie);
+            navigate("/movie-details");
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
 
-  const navigate = useNavigate();
-  const details = () => {
-    // Code à exécuter lorsque le bouton est pressé.
-    navigate('/details');
-  }
+    const onSeriesDetailsNavigate = (serie) => {
+        try {
+            onChangeCurrentSeries(serie);
+            navigate("/series-details");
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
-  /*<TouchableOpacity style={[styles.button, styles.back]} onPress={back}>
-    <Text style={styles.textbutton}>&larr; Back</Text>
-  </TouchableOpacity>*/
     return (
-      <SafeAreaView style={styles.container}>
+        <SafeAreaView style={styles.container}>
 
-        <View>
-          <Header />
-        </View>
+            <View>
+                <Header/>
+            </View>
 
-        <ScrollView>
-          <View>
-              <Text style={styles.texteFirst}>Profil</Text>
-          </View>
+            <ScrollView style={styles.vScrol}>
+                <Text style={styles.texteSecond}>Films</Text>
+                    <FlatList
+                        data={movies}
+                        renderItem={({item}) =>
+                            renderMovieItem({
+                                item,
+                                onDetailsNavigate: onMovieDetailsNavigate,
+                                width: '50%',
+                            })}
+                        keyExtractor={(movie) => movie.id}
+                        numColumns={2}
+                    />
 
-          <View style={styles.row}>
-            <Image style={styles.images} source={require('../../media/footer/ico-home.png')} />
-            <Image style={styles.images} source={require('../../media/footer/ico-home.png')} />
-          </View>
-          <View style={styles.row}>
-            <Image style={styles.images} source={require('../../media/footer/ico-home.png')} />
-            <Image style={styles.images} source={require('../../media/footer/ico-home.png')} />
-          </View>
-          <View style={styles.row}>
-            <Image style={styles.images} source={require('../../media/footer/ico-home.png')} />
-            <Image style={styles.images} source={require('../../media/footer/ico-home.png')} />
-          </View>
+                <Text style={styles.texteSecond}>Séries</Text>
+                    <FlatList
+                        data={series}
+                        renderItem={({item}) =>
+                            renderSeriesItem({
+                                item,
+                                onDetailsNavigate: onSeriesDetailsNavigate,
+                                width: '50%',
+                            })}
+                        keyExtractor={(serie) => serie.id}
+                        numColumns={2}
+                    />
 
-          <View>
-            <Version />
-          </View>
-        </ScrollView>
+                <View>
+                    <Version/>
+                </View>
+            </ScrollView>
 
-        <View>
-          <Footer />
-        </View>
+            <View>
+                <Footer/>
+            </View>
 
-      </SafeAreaView>
+        </SafeAreaView>
     );
 }
 
@@ -64,49 +122,46 @@ export default function Profile(props) {
 //Le style de la page.
 const styles = StyleSheet.create({
     container: {
-      backgroundColor: 'black',
-      color: '#f1f1f1',
-      flex: 1,
-      //textAlign: 'justify',
-    },
-    texteFirst: {
-      color: '#f1f1f1',
-      textAlign: 'justify',
-      fontSize: 34,
-      fontWeight: 'bold',
-      marginVertical: 34,
-      margin: 'auto',
-      //textAlignVertical: 'auto',
-      textAlign: 'center',
+        backgroundColor: 'black',
+        color: '#f1f1f1',
+        flex: 1,
     },
     texteSecond: {
-      color: '#f1f1f1',
-      textAlign: 'justify',
-      marginHorizontal: 'auto',
-      fontSize: 21,
+        color: '#f1f1f1',
+        textAlign: 'center',
+        marginHorizontal: 'auto',
+        fontSize: 21,
+    },
+    texteThird: {
+        color: '#f1f1f1',
+        textAlign: 'center',
+        marginHorizontal: 'auto',
+        fontSize: 13,
     },
     button: {
-      backgroundColor: '#f6f6f6',
-      color: '#f1f1f1',
-      marginVertical: 21,
+        backgroundColor: '#f6f6f6',
+        color: '#f1f1f1',
+        marginVertical: 21,
     },
     images: {
-      width: 144,
-      height: 233,
-      margin: 15,
-      backgroundColor: 'red',
-      borderRadius: 13,
+        width: 144,
+        height: 233,
+        margin: 15,
+        backgroundColor: 'red',
+        borderRadius: 13,
     },
-    viewProfile: {
-      backgroundColor: 'transparent',
-      color: 'white',
-      width: '100%',
-      height: 'auto',
+    vScrol: {
+        width: '100%',
+        height: 'auto',
     },
     row: {
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-      margin: 'auto',
-    }
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 'auto',
+    },
+    texteCenter: {
+        color: 'white',
+        textAlign: 'center',
+    },
 });

@@ -9,7 +9,7 @@ export default function Version (props) {
     const MainPage = () => {
       // Code à exécuter lorsque le bouton est pressé.
       try {
-        navigate('/');
+        navigate('/home');
         //console.log(props, '/home',);
       } catch (error) {
         console.log(error);

@@ -23,7 +23,7 @@ import axios from "axios";
 import {useSeriesContext} from "../../context/seriesContext";
 import {useMoviesContext} from "../../context/moviesContext";
 
-export default function Home(props) {
+export default function Home (props) {
     const navigate = useNavigate();
     const {onChangeCurrentSeries} = useSeriesContext();
     const {onChangeCurrentMovie} = useMoviesContext();
@@ -80,14 +80,13 @@ export default function Home(props) {
 
             <ScrollView style={styles.vScrol}>
                 <View style={styles.carousel}>
-                    <Text style={styles.texteFirst}>VOS ANIMES GRATUITEMENT ET SANS PUB.</Text>
+                    <Text style={styles.texteFirst}>VOS ANIMES GRATUITS ET SANS PUB.</Text>
                     <View>
-                        <Text style={styles.texteSecond}>Une application fait par un passionné, pour des passionnés.</Text>
-                        <Text style={styles.texteSecond}>100% gratuit, open source et sans pub.</Text>
+                        <Text style={styles.texteSecond}>Une application faite par un passionné pour des passionnés.</Text>
                     </View>
                 </View>
 
-                <Text style={styles.texteSecond}>Movies</Text>
+                <Text style={styles.texteSecond}>Films</Text>
                     <FlatList
                         data={movies}
                         renderItem={({item}) =>
@@ -100,7 +99,7 @@ export default function Home(props) {
                         numColumns={2}
                     />
 
-                <Text style={styles.texteSecond}>Series</Text>
+                <Text style={styles.texteSecond}>Séries</Text>
                     <FlatList
                         data={series}
                         renderItem={({item}) =>
