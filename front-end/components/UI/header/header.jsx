@@ -1,65 +1,70 @@
 import React, {useState} from "react";
-import { StyleSheet, Button, View, SafeAreaView, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
+import {StyleSheet, Button, View, SafeAreaView, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
 
 //import Swipeout from 'react-native-swipeout';
 //import { SwipeListView } from 'react-native-swipe-list-view';
-import { useNavigate } from 'react-router-native';
+import {useNavigate} from 'react-router-native';
+import {useUserContext} from "../../context/userContext";
 
 
-export default function Header (props) {
-
+export default function Header(props) {
+    const {isAdmin} = useUserContext()
     const navigate = useNavigate();
 
-    const films = () => {
-      // Code à exécuter lorsque le bouton est pressé.
-      try {
-        navigate('/films');
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    const series = () => {
-      // Code à exécuter lorsque le bouton est pressé.
-      try {
-        navigate('/series');
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    const home = () => {
-      // Code à exécuter lorsque le bouton est pressé.
-      try {
-        navigate('/home');
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    const onNavigate = (path) => {
+        try {
+            navigate(path);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <SafeAreaView>
             <View style={styles.header}>
                 <View style={styles.viewButtonHeader}>
-                    <TouchableOpacity onPress={home}>
-                      <Image style={styles.images} source={require('../../media/header/ico-logo.png')} />
+                    <TouchableOpacity onPress={() => onNavigate('/')}>
+                        <Image style={styles.images} source={require('../../media/header/ico-logo.png')}/>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.buttonHeader} onPress={films}>
+                    <TouchableOpacity
+                        style={styles.buttonHeader}
+                        onPress={() =>
+                            onNavigate('/films')
+                        }
+                    >
                         <Text style={styles.texteHeader}>
                             Films
                         </Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.buttonHeader} onPress={series}>
+                    <TouchableOpacity
+                        style={styles.buttonHeader}
+                        onPress={() =>
+                            onNavigate('/series')
+                        }
+                    >
                         <Text style={styles.texteHeader}>
                             Séries
                         </Text>
                     </TouchableOpacity>
+                    {
+                        isAdmin && <TouchableOpacity
+                            style={styles.buttonHeader}
+                            onPress={() =>
+                                onNavigate('/gestion')
+                            }
+                        >
+                            <Text style={styles.texteHeader}>
+                                Gestion
+                            </Text>
+                        </TouchableOpacity>
+                    }
                 </View>
             </View>
         </SafeAreaView>
     )
 }
-
 
 
 const styles = StyleSheet.create({
@@ -94,8 +99,8 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 21,
         borderBottomRightRadius: 21,
         //flex: 1,
-      },
-      buttonHeader: {
+    },
+    buttonHeader: {
         backgroundColor: '#404040',
         width: 89,
         height: 34,
@@ -105,12 +110,12 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         alignItems: 'center',
         //flex: 1,
-      },
-      images: {
+    },
+    images: {
         backgroundColor: '#404040',
         width: 34,
         height: 34,
         margin: 5,
         borderRadius: 8,
-      },
+    },
 })

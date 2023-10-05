@@ -7,20 +7,24 @@ import Header from "../../UI/header/header";
 import Footer from "../../UI/footer/footer";
 import Version from "../../UI/version/version";
 import {useUserContext} from "../../context/userContext";
+import axios from "axios";
 
 
 export default function Parametres () {
-  const { user } = useUserContext()
+  const { user, onResetUser } = useUserContext()
 
-  const delAcompt = "Votre compte est supprimé.";
-  const delAcomptConsoleLog = "compte supprimé.";
+  const delAcompt = "Déconnexion de votre compte !";
 
   const navigate = useNavigate();
-  const supCompte = () => {
+  const onLogout = async () => {
     try {
       alert(delAcompt);
+
+      await axios
+          .post('http://localhost:5000/auth/logout', {}, {withCredentials: true})
+
+      onResetUser();
       navigate('/');
-      console.log(delAcomptConsoleLog);
     } catch (error) {
       console.log(error);
     };
@@ -52,9 +56,9 @@ export default function Parametres () {
         </View>
 
         <View>
-          <TouchableOpacity onPress={supCompte} style={styles.supcompte}>
+          <TouchableOpacity onPress={onLogout} style={styles.supcompte}>
             <Text style={styles.textsupcompte}>
-              Supprimer le compte.
+              Déconnexion
             </Text>
           </TouchableOpacity>
         </View>

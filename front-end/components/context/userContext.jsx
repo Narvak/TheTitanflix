@@ -5,24 +5,35 @@ export const UserContext = createContext();
 
 export const UserProvider = (props) => {
     const [user, setUser] = useState(null);
+    const [isAdmin, setIsAdmin] = useState(false);
 
     const onGetUser = async () => {
         try {
             const response = await axios.get('http://localhost:5000/users/current');
             setUser(response?.data);
+            setIsAdmin(response?.data?.role === 'admin');
         } catch (err) {
             console.log(err);
         }
     }
-    console.log(user)
-    useEffect(() => {
-        onGetUser();
-    }, []);
 
+    const onResetUser = () => {
+        setUser(null);
+        setIsAdmin(false);
+    }
+
+    useEffect(() => {
+        ;(async () => {
+            await onGetUser();
+        })();
+    }, []);
+    console.log(user)
     const value = useMemo(() => ({
         user,
+        isAdmin,
         onGetUser,
-    }), [user]);
+        onResetUser
+    }), [user, isAdmin]);
 
     return (
         <UserContext.Provider value={value}>

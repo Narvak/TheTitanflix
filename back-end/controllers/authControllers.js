@@ -37,6 +37,7 @@ export class AuthControllers {
                     username: user.username,
                     email: user.email,
                     phone: user.phone,
+                    role: user.role,
                 },
                 jwtSecret,
                 {expiresIn: maxAge}
@@ -55,12 +56,18 @@ export class AuthControllers {
 
     static async register(req, res) {
         try {
-            const {username, email, password, phone} = req.body;
+            const {username, email, password, phone, role} = req.body;
 
             const salt = bcrypt.genSaltSync(10)
             const hashPassword = bcrypt.hashSync(password, salt)
 
-            const user = await UserModel.create({username, email, password: hashPassword, phone});
+            const user = await UserModel.create({
+                username,
+                email,
+                password: hashPassword,
+                phone,
+                ...(role && {role})
+            });
 
             await AuthControllers.login(req, res);
 
@@ -68,6 +75,19 @@ export class AuthControllers {
                 data: user,
                 message: "User created !"
             })
+        } catch (err) {
+            console.log(err);
+            res.status(500).send({error: err.message})
+        }
+    }
+
+    static async logout(req, res) {
+        try {
+            res.cookie("token", "", {
+                maxAge: 1,
+            })
+
+            return res.status(200).send({message: "User logged out !"});
         } catch (err) {
             console.log(err);
             res.status(500).send({error: err.message})
