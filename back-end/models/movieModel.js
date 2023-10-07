@@ -5,7 +5,11 @@ const MovieSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    logo: {
+    description: {
+        type: String,
+        require: true,
+    },
+    image: {
         type: String,
         required: false,
     },
