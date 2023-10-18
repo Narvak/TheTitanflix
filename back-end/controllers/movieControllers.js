@@ -33,9 +33,9 @@ export class MovieControllers {
 
     static async create(req, res) {
         try {
-            const { name, description, image, time } = req.body;
+            const { name, description, image, time, movieUrl } = req.body;
 
-            const movieCreated = await MovieModel.create({ name, description, image, time });
+            const movieCreated = await MovieModel.create({ name, description, image, time, movieUrl });
 
             return res.status(201).send({ movieCreated })
         } catch (err) {
@@ -47,7 +47,7 @@ export class MovieControllers {
     static async update(req, res) {
         try {
             const { movieId } = req.params;
-            const { name, description, image, time } = req.body;
+            const { name, description, image, time, movieUrl } = req.body;
 
             const movieUpdated = await MovieModel.findOneAndUpdate(
                 { _id: movieId },
@@ -56,6 +56,7 @@ export class MovieControllers {
                     ...(description ? { description } : {}),
                     ...(time ? { time }: {}),
                     ...(image ? { image }: {}),
+                    ...(movieUrl ? { movieUrl } : {})
                 },
                 { new: true }
             )

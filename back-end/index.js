@@ -17,7 +17,7 @@ if(uri){
         .then(() => {
             console.log("DB Connected !")
         })
-        .catch(err => console.log(err)) 
+        .catch(err => console.log(err))
 } else {
     console.log("No URI to DB")
 }
@@ -26,7 +26,7 @@ const app = express()
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors())
+app.use(cors('*'))
 
 router(app)
 

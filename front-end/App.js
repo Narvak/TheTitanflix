@@ -8,6 +8,7 @@ import {MoviesProvider} from "./src/context/moviesContext";
 import {SeriesProvider} from "./src/context/seriesContext";
 import {UserProvider} from "./src/context/userContext";
 import {Router} from "./src/routes/Routes";
+import {VideoContext, VideoProvider} from "./src/context/videoContext";
 
 //export default function App () {
 export default class App extends React.Component {
@@ -19,7 +20,9 @@ export default class App extends React.Component {
                 <UserProvider>
                     <MoviesProvider>
                         <SeriesProvider>
-                            <Router/>
+                            <VideoProvider>
+                                <Router/>
+                            </VideoProvider>
                         </SeriesProvider>
                     </MoviesProvider>
                 </UserProvider>

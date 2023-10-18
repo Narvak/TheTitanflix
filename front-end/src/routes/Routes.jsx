@@ -15,6 +15,7 @@ import Footer from "../components/footer/footer";
 import Version from "../components/version/version";
 import Header from "../components/header/header";
 import {StyleSheet, View} from "react-native";
+import {VideoPage} from "../pages/video/Video";
 
 export const Router = () => {
     const {user} = useUserContext();
@@ -31,6 +32,8 @@ export const Router = () => {
 
                 <Route path='/movie-details' element={<MovieDetails/>}/>
                 <Route path='/series-details' element={<SeriesDetails/>}/>
+
+                <Route path="/video" element={<VideoPage/>}/>
 
                 <Route path="/gestion" element={<GestionPage/>}/>
             </Routes>

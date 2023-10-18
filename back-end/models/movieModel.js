@@ -13,6 +13,10 @@ const MovieSchema = new mongoose.Schema({
         type: String,
         required: false,
     },
+    movieUrl: {
+        type: String,
+        required: true,
+    },
     time: {
         type: Number,
         required: true,
