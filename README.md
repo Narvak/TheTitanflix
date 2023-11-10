@@ -15,3 +15,13 @@
 #### mongoose
 #### nodemon
 #### cors
+
+
+### To download the files:
+#### git clone https://github.com/Narvak/TheTitanflix.git
+
+### To download the dependencies:
+#### npm i
+
+### To start the server locally:
+#### npm start
