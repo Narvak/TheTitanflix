@@ -15,6 +15,7 @@
 #### mongoose
 #### nodemon
 #### cors
+#### bcrypt
 
 
 ### To download the files:
